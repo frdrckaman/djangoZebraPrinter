@@ -49,7 +49,8 @@ function writeToSelectedPrinter()
 {
 
 	var x=1;var y='';var id=document.getElementById('study_id').value;
-    var no=document.getElementById('no_label').value;
+    var no=Number(document.getElementById('no_label').value);
+
 	while(x < no+1){
 		if(x < 10){y='0'+x}else{y=x}
 		var dataToWrite ='^XA^BY2,2,100^FO80,10^BC^FD'+id+'-'+y+'^FS^XZ'
