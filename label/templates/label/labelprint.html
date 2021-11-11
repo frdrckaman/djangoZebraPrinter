@@ -48,8 +48,9 @@ function setup()
 function writeToSelectedPrinter()
 {
 
-	var x=1;var y='';var id=document.getElementById('study_id').value
-	while(x < 3){
+	var x=1;var y='';var id=document.getElementById('study_id').value;
+    var no=document.getElementById('no_label').value;
+	while(x < no+1){
 		if(x < 10){y='0'+x}else{y=x}
 		var dataToWrite ='^XA^BY2,2,100^FO80,10^BC^FD'+id+'-'+y+'^FS^XZ'
 		selected_device.send(dataToWrite, undefined, errorCallback);
@@ -73,7 +74,6 @@ var errorCallback = function(errorMessage){
 	alert("Error: " + errorMessage);
 }
 
-
 window.onload = setup;
 
 </script>
@@ -83,8 +83,10 @@ window.onload = setup;
 <span style="padding-right:50px; font-size:200%">Zebra Browser Print Test Page</span><br/>
 <span style="font-size:75%">This page must be loaded from a web server to function properly.</span><br><br>
 Selected Device: <select id="selected_device" onchange=onDeviceSelected(this);></select> <!--  <input type="button" value="Change" onclick="changeDevice();">--> <br/><br/>
-
-<input type="text" name="study_id" id="study_id">
+<label for="fname">Enter Number of Labels : </label>
+<input type="number" name="no_label" id="no_label"><br><br>
+<label for="fname">Label ID : </label>
+<input type="text" name="study_id" id="study_id"><br><br>
 <button id="myButton">Print Barcode</button>
 <script>
   var button = document.querySelector('#myButton');
