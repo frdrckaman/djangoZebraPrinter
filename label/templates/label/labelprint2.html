@@ -1,0 +1,38 @@
+{% extends 'label/base.html' %}
+{% block print %}
+      function writeToSelectedPrinter()
+{
+ var a=1;var b='';
+    while(a < 12){
+	var x=1;var y='';var f=0;var id=document.getElementById('study_id').value;
+    if(a < 10){b='0'+a}else{b=a}
+
+    while (f<2){
+        var dataToWrite ='^XA^BY2,2,100^FO80,10^BC^FD'+id+'-'+b+'^FS^XZ'
+		selected_device.send(dataToWrite, undefined, errorCallback);
+        f++;
+    }
+
+	while(x < 16){
+		if(x < 10){y='0'+x}else{y=x}
+		var dataToWrite ='^XA^BY2,2,100^FO80,10^BC^FD'+id+'-'+b+'-'+y+'^FS^XZ'
+		selected_device.send(dataToWrite, undefined, errorCallback);
+		x++;
+	}
+    a++;
+    }
+
+}
+{% endblock print %}
+{% block body %}
+    <span style="font-size:75%">This page must be loaded from a web server to function properly.</span><br><br>
+Selected Device: <select id="selected_device" onchange=onDeviceSelected(this);></select>
+<label for="fname">Label ID : </label>
+<input type="text" name="study_id" id="study_id"><br><br>
+<button id="myButton">Print Barcode</button>
+<script>
+  var button = document.querySelector('#myButton');
+  button.addEventListener('click', function() { writeToSelectedPrinter()});
+  button.click();
+</script>
+{% endblock body %}

@@ -1,0 +1,8 @@
+{% extends 'label/base.html' %}
+{% block print %}{% endblock print %}
+{% block body %}
+    <br>
+    <a href="{% url 'byHousehold' %}">Print by Household</a>
+    <h1>&nbsp;</h1>
+    <a href="{% url 'byEA' %}">Print by EA</a>
+{% endblock body %}
