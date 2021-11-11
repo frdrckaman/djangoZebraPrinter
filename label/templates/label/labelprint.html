@@ -43,17 +43,21 @@ function setup()
 				alert(error);
 			})
 }
-function getConfig(){
-	BrowserPrint.getApplicationConfiguration(function(config){
-		alert(JSON.stringify(config))
-	}, function(error){
-		alert(JSON.stringify(new BrowserPrint.ApplicationConfiguration()));
-	})
-}
-function writeToSelectedPrinter(dataToWrite)
+
+
+function writeToSelectedPrinter()
 {
-	selected_device.send(dataToWrite, undefined, errorCallback);
+
+	var x=1;var y='';var id=document.getElementById('study_id').value
+	while(x < 3){
+		if(x < 10){y='0'+x}else{y=x}
+		var dataToWrite ='^XA^BY2,2,100^FO80,10^BC^FD'+id+'-'+y+'^FS^XZ'
+		selected_device.send(dataToWrite, undefined, errorCallback);
+		x++;
+	}
+
 }
+
 var readCallback = function(readData) {
 	if(readData === undefined || readData === null || readData === "")
 	{
@@ -68,56 +72,27 @@ var readCallback = function(readData) {
 var errorCallback = function(errorMessage){
 	alert("Error: " + errorMessage);
 }
-function readFromSelectedPrinter()
-{
 
-	selected_device.read(readCallback, errorCallback);
 
-}
-function getDeviceCallback(deviceList)
-{
-	alert("Devices: \n" + JSON.stringify(deviceList, null, 4))
-}
-
-function sendImage(imageUrl)
-{
-	url = window.location.href.substring(0, window.location.href.lastIndexOf("/"));
-	url = url + "/" + imageUrl;
-	selected_device.convertAndSendFile(url, undefined, errorCallback)
-}
-function sendFile(fileUrl){
-    url = window.location.href.substring(0, window.location.href.lastIndexOf("/"));
-    url = url + "/" + fileUrl;
-    selected_device.sendFile(url, undefined, errorCallback)
-}
-function onDeviceSelected(selected)
-{
-	for(var i = 0; i < devices.length; ++i){
-		if(selected.value == devices[i].uid)
-		{
-			selected_device = devices[i];
-			return;
-		}
-	}
-}
 window.onload = setup;
+
 </script>
 </head>
-<body>
+<body >
 
 <span style="padding-right:50px; font-size:200%">Zebra Browser Print Test Page</span><br/>
 <span style="font-size:75%">This page must be loaded from a web server to function properly.</span><br><br>
 Selected Device: <select id="selected_device" onchange=onDeviceSelected(this);></select> <!--  <input type="button" value="Change" onclick="changeDevice();">--> <br/><br/>
-<input type="button" value="Get Application Configuration" onclick="getConfig()"><br/><br/>
-<input type="button" value="Send Config Label" onclick="writeToSelectedPrinter('~wc')"><br/><br/>
-<input type="button" value="Send ZPL Label" onclick="writeToSelectedPrinter('^XA^BY2,2,100^FO80,10^BC^FD001-01-01^FS^XZ')"><br/><br/>
-<input type="button" value="Get Status" onclick="writeToSelectedPrinter('~hs'); readFromSelectedPrinter()"><br/><br/>
-<input type="button" value="Get Local Devices" onclick="BrowserPrint.getLocalDevices(getDeviceCallback, errorCallback);"><br/><br/>
-<input type="text" name="write_text" id="write_text"><input type="button" value="Write" onclick="writeToSelectedPrinter(document.getElementById('write_text').value)"><br/><br/>
-<input type="button" value="Read" onclick="readFromSelectedPrinter()"><br/><br/>
-<input type="button" value="Send BMP" onclick="sendImage('Zebra_logobox.bmp');"><br/><br/>
-<input type="button" value="Send JPG" onclick="sendImage('ZebraGray.jpg');"><br/><br/>
-<input type="button" value="Send File" onclick="sendFile('wc.zpl');"><br/><br/>
+
+<input type="text" name="study_id" id="study_id">
+<button id="myButton">Print Barcode</button>
+<script>
+  var button = document.querySelector('#myButton');
+  button.addEventListener('click', function() { writeToSelectedPrinter()});
+  button.click();
+</script>
+
+
 </body>
 </html>
 
