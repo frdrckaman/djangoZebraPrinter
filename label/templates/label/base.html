@@ -54,14 +54,14 @@ function setup()
     var no=Number(document.getElementById('no_label').value);
 
     while (f<2){
-        var dataToWrite ='^XA^BY1,2,100^FO80,10^BC^FD'+id+'^FS^XZ'
+        var dataToWrite ='^XA^BY1,2,100^FO70,40^BC^FD'+id+'^FS^XZ'
 		selected_device.send(dataToWrite, undefined, errorCallback);
         f++;
     }
 
 	while(x < no+1){
 		if(x < 10){y='0'+x}else{y=x}
-		var dataToWrite ='^XA^BY1,2,100^FO80,10^BC^FD'+id+'-'+y+'^FS^XZ'
+		var dataToWrite ='^XA^BY1,2,100^FO70,40^BC^FD'+id+'-'+y+'^FS^XZ'
 		selected_device.send(dataToWrite, undefined, errorCallback);
 		x++;
 	}
