@@ -8,14 +8,14 @@
     if(a < 10){b='0'+a}else{b=a}
 
     while (f<2){
-        var dataToWrite ='^XA^BY2,2,100^FO80,10^BC^FD'+id+'-'+b+'^FS^XZ'
+        var dataToWrite ='^XA^BY1,2,100^FO80,10^BC^FD'+id+'-'+b+'^FS^XZ'
 		selected_device.send(dataToWrite, undefined, errorCallback);
         f++;
     }
 
 	while(x < 16){
 		if(x < 10){y='0'+x}else{y=x}
-		var dataToWrite ='^XA^BY2,2,100^FO80,10^BC^FD'+id+'-'+b+'-'+y+'^FS^XZ'
+		var dataToWrite ='^XA^BY1,2,100^FO80,10^BC^FD'+id+'-'+b+'-'+y+'^FS^XZ'
 		selected_device.send(dataToWrite, undefined, errorCallback);
 		x++;
 	}
